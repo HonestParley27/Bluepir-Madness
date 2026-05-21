@@ -1,0 +1,14 @@
+{
+    "id":"bpMadness",
+    "name":"Blue Pirs' Madness",
+    "author":["HonestParley27 ( Developer )","JustNotSebas ( Developer )","Blue Pirs ( Artist )"],
+    "description":["A Balatro Mod for Blue Pirs' and her Angelic Community~","Filled with Chaos."],
+    "version":"0.0.1",
+    "main_file":"main.lua",
+    "priority":0,
+    "badge_colour":"61f2ff",
+    "badge_text_colour":"32434d",
+    "dependencies":[
+        "Steamodded (>=1.0.0~ALPHA-1225a)"
+    ]
+}

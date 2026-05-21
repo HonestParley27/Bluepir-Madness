@@ -1,0 +1,16 @@
+{
+	"id": "BluePirsJoker",
+	"name": "The Blue Jokers Mod",
+	"display_name": "Blue Pir Jokers",
+	"author": ["HonestParley27"],
+	"description": "Adds A single joker, made after Blue and her crippling Two Pairs Addiction",
+	"prefix": "prefix",
+	"main_file": "BluePirsJoker",
+	"priority": 0,
+	"badge_colour": "96eeff",
+	"badge_text_colour": "375bed",
+	"version": "1.0.0",
+	"dependencies": [
+        "Steamodded (>=1.0.0~ALPHA-1225a)"
+    ]
+}

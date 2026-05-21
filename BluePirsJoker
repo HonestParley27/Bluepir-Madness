@@ -1,0 +1,61 @@
+SMODS.Atlas {
+    key = "BluePirJoker",
+    path = "BluePirsJoker.png",
+    px = 71,
+    py = 95
+
+}
+
+SMODS.Joker {
+    key = "BluePir",
+
+
+    config = { extra = {lvChance = 4, xMult = 1, xGain = 0.25}},
+    rarity = 2,
+    atlas = "BluePirJoker",
+    pos = { x = 0, y = 0 },
+    cost = 5,
+    loc_vars = function (self,info_queue,card)
+        local num,dem = SMODS.get_probability_vars(card,1,card.ability.extra.lvChance,"BluePir")
+        return{ vars = {num,dem,card.ability.extra.xMult,card.ability.extra.xGain}}
+        
+    end,
+    loc_txt = {
+        name = 'Blue Pair',
+        text = {
+            "{C:green}#1# in #2#{} chance to level up played hand",
+            "when {C:attention}Two Pair{} is played.",
+            "{X:mult,C:white} X#3# {} Mult when {C:attention}Two Pair{} is played",
+            "Gains {X:mult,C:white} X#4# {} Mult when {C:attention}Two Pair{} is played."
+        }
+    },
+
+    calculate = function(self,card,context)
+        if context.before and next(context.poker_hands["Two Pair"]) then
+            if SMODS.pseudorandom_probability(card,"BluePir",1,card.ability.extra.lvChance) then
+                SMODS.upgrade_poker_hands({
+                    hands = "Two Pair",
+                    level_up = 1,
+                    from = card,
+                    instant = false
+                })
+
+            end
+            if not context.blueprint_card then
+                card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xGain
+                return {
+                    message = "Upgraded!"
+                }
+            end
+        end
+
+        if context.joker_main  then
+
+            if context.scoring_name == "Two Pair" then
+                return {
+                xmult = card.ability.extra.xMult
+                }
+            end
+        end
+    end
+}

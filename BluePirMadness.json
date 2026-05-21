@@ -1,6 +1,7 @@
 {
     "id":"bpMadness",
     "name":"Blue Pirs' Madness",
+    "display_name": "Blue Pirs' Madness",
     "author":["HonestParley27 ( Developer )","JustNotSebas ( Developer )","Blue Pirs ( Artist )"],
     "description":["A Balatro Mod for Blue Pirs' and her Angelic Community~","Filled with Chaos."],
     "version":"0.0.1",

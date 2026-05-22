@@ -5,9 +5,5 @@ local files = NFS.getDirectoryItems(modPath.. "lib")
 
 for _,file in ipairs(files) do
 	print("[BluePir Madness] Loading file " .. file)
-	local f, err = SMODS.load_file("items/" .. file)
-	if err then
-		error(err) -- Man I hope ts doesn't proc 
-	end
+    assert(SMODS.load_file("lib/"..file))()
 end
-

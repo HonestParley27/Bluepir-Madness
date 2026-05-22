@@ -6,13 +6,146 @@ SMODS.Atlas {
 
 }
 
+-- Blue Pairs
 SMODS.Joker {
     key = "BluePairs",
 
     config = {
         extra = {
-            xmult = 1,
-            xmultgain = 0.5
+            xMult = 1,
+            xMultgain = 0.5
         }
     },
+    rarity = 2,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0},
+    cost = 5,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.xMult,
+                card.ability.extra.xMultgain
+        
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Blue Pairs",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult when {C:attention}Two Pair{} is played",
+            "Gains {X:mult,C:white} X#2# {} Mult when {C:attention}Two Pair{} is played."
+        }
+    },
+
+    calculate = function (self, card, context)
+        if context.joker_main then
+            if context.scoring_name == 'Two Pair' then
+                return {
+                    xmult = card.ability.extra.xMult
+                }
+            end
+        end
+
+        if context.before and context.scoring_name == "Two Pair" and not context.blueprint_card then
+            card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultgain
+            return {
+                message = "Upgraded!"
+            }
+        end
+    end
+}
+-- Lucky Cloud
+SMODS.Joker {
+    key = "LuckyCloud",
+    rarity = 2,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    cost = 6,
+    config = { extra = {
+        lvChance = 4
+    } },
+    loc_vars = function (self, info_queue, card)
+        local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.lvChance, "Lucky Cloud")
+        return {
+            vars = {
+                num,
+                dem
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Lucky Cloud",
+        text = {
+            "{C:green}#1# in #2#{} chance to level up played hand,",
+            "when {C:attention}Two Pair{} is played."
+        }
+    },
+    
+    calculate = function (self, card, context)
+        if context.before and context.scoring_name == "Two Pair" then
+            if SMODS.pseudorandom_probability(card, "Lucky Cloud", 1, card.ability.extra.lvChance) then
+                SMODS.upgrade_poker_hands({
+                    hands = { 'Two Pair' },
+                    level_up = 1,
+                    from = card,
+                    instant = false
+                })
+                return {
+                    message = "Upgraded!"
+                }
+            end
+        end
+    end
+}
+-- Skip a Lime
+SMODS.Joker {
+    key = "skipalime",
+    cost = 3,
+    config = { extra = {
+        sellValGain = 3,
+        originalSellVal = 0,
+        plusMult = 1
+    } },
+    rarity = 1,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    loc_vars = function(self, info_queue, card)
+        local mu = 0
+        if card.cost/2 < 1 then
+            mu = 1
+        else
+            mu = math.floor(card.cost/2)
+        end
+        card.ability.extra.originalSellVal = mu
+        return{
+            vars = {
+                card.ability.extra.sellValGain,
+                card.ability.extra.plusMult
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Skip A Lime",
+        text = {
+            "Gains {C:money}$#1#{} per blind skipped.",
+            "{X:mult,C:white} +#2# {} Mult, where Mult is equal to Sell Value of Joker"
+        }
+    },
+    calculate = function (self, card, context)
+        if context.skip_blind and not context.blueprint_card then
+            card.ability.extra_value = card.ability.extra_value + card.ability.extra.sellValGain
+            card.ability.extra.plusMult = card.ability.extra.originalSellVal + card.ability.extra_value
+            card:set_cost()
+
+            return {
+                message = "Upgraded!"
+            }
+        end
+
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.plusMult
+            }
+        end
+    end
 }

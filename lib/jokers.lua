@@ -149,3 +149,38 @@ SMODS.Joker {
         end
     end
 }
+-- Short Circut
+SMODS.Joker {
+    key = "ShortCircut",
+    config = { extra = {
+        speedmult = 4
+    } },
+    rarity = 4,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    cost = 20,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.speedmult
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Short Circut",
+        text = {
+            "Sets Gamespeed to x#1#, adds {C:white,X:mult} x#1# {} Mult"
+        }
+    },
+    calculate = function (self, card, context)
+        if G.SETTINGS.GAMESPEED ~= 4 then
+            G.SETTINGS.GAMESPEED = 4
+        end
+
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.speedmult
+            }
+        end
+    end
+}

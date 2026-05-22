@@ -62,7 +62,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     cost = 6,
     config = { extra = {
-        lvChance = 4
+        lvChance = 3
     } },
     loc_vars = function (self, info_queue, card)
         local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.lvChance, "Lucky Cloud")
@@ -155,7 +155,7 @@ SMODS.Joker {
     config = { extra = {
         speedmult = 4
     } },
-    rarity = 4,
+    rarity = 3,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     cost = 20,

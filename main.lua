@@ -7,7 +7,7 @@ for _,file in ipairs(files) do
 	print("[BluePir Madness] Loading file " .. file)
 	local f, err = SMODS.load_file("items/" .. file)
 	if err then
-		error(err) --Steamodded actually does a really good job of displaying this info! So we don't need to do anything else.
+		error(err) -- Man I hope ts doesn't proc 
 	end
 end
 

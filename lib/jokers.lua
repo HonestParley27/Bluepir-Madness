@@ -153,12 +153,14 @@ SMODS.Joker {
 SMODS.Joker {
     key = "ShortCircut",
     config = { extra = {
-        speedmult = 4
+        speedmult = 4,
+        originalGameSpeed = 1,
+        enabled = true
     } },
     rarity = 3,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
-    cost = 20,
+    cost = 10,
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -172,9 +174,21 @@ SMODS.Joker {
             "Sets Gamespeed to x#1#, adds {C:white,X:mult} x#1# {} Mult"
         }
     },
-    calculate = function (self, card, context)
-        if G.SETTINGS.GAMESPEED ~= 4 then
+    calculate = function(self, card, context)
+        
+        if context.buying_self and not context.blueprint_card then
+            card.ability.extra.originalGameSpeed = G.SETTINGS.GAMESPEED
+            print(card.ability.extra.originalGameSpeed)
+        end
+
+        if G.SETTINGS.GAMESPEED ~= 4 and card.ability.extra.enabled and not context.blueprint_card  then
             G.SETTINGS.GAMESPEED = 4
+        end
+
+        if ((context.joker_type_destroyed and context.card == card) or (context.selling_card and context.card == card)) and not context.blueprint_card then
+            card.ability.extra.enabled = false
+            print(card.ability.extra.originalGameSpeed)
+            G.SETTINGS.GAMESPEED = card.ability.extra.originalGameSpeed
         end
 
         if context.joker_main then
@@ -182,5 +196,6 @@ SMODS.Joker {
                 xmult = card.ability.extra.speedmult
             }
         end
-    end
+    end,
+
 }

@@ -56,7 +56,7 @@ SMODS.Joker {
 }
 -- Lucky Cloud
 SMODS.Joker {
-    key = "LuckyCloud",
+    key = "lucky_cloud",
     rarity = 2,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -99,7 +99,7 @@ SMODS.Joker {
 }
 -- Skip a Lime
 SMODS.Joker {
-    key = "skipalime",
+    key = "skip_a_lime",
     cost = 3,
     config = { extra = {
         sellValGain = 3,
@@ -151,7 +151,7 @@ SMODS.Joker {
 }
 -- Short Circut
 SMODS.Joker {
-    key = "ShortCircut",
+    key = "short_circut",
     config = { extra = {
         speedmult = 4,
         originalGameSpeed = 1,
@@ -202,7 +202,7 @@ SMODS.Joker {
 
 -- Vanium's Curse
 SMODS.Joker {
-    key = "VaniumCurse",
+    key = "vanium_curse",
     config = {
         extra = {
             MultX = 0.67,
@@ -247,4 +247,8 @@ SMODS.Joker {
             card.ability.extra.scored7 = false
         end
     end
+}
+-- Ad Astra
+SMODS.Joker {
+    key = "ad_astra"
 }

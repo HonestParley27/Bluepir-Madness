@@ -250,5 +250,39 @@ SMODS.Joker {
 }
 -- Ad Astra
 SMODS.Joker {
-    key = "ad_astra"
+    key = "ad_astra",
+    atlas = "TestJoker",
+    rarity = 2,
+    cost = 5,
+    pos = { x = 0, y = 0 },
+    config = { extra = {
+       MultX = 0.5 
+    } },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.MultX
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Ad Astra",
+        text = {"{X:mult,C:white} x#1# {} Mult for each time {C:attention}poker hand{} has been played this run."}
+    },
+
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+            local totalMult = 1
+            totalMult = G.GAME.hands["" .. context.scoring_name].played * card.ability.extra.MultX + 0.5
+            
+            if totalMult < 1 then
+                totalMult = 1
+            end
+
+            return {
+                xmult = totalMult
+            }
+        end
+    end
 }

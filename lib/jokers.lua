@@ -199,3 +199,52 @@ SMODS.Joker {
     end,
 
 }
+
+-- Vanium's Curse
+SMODS.Joker {
+    key = "VaniumCurse",
+    config = {
+        extra = {
+            MultX = 0.67,
+            scored6 = false,
+            scored7 = false
+        }
+    },
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    cost = 3,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.MultX
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Vanium's Curse",
+        text = {
+            "{C:white,X:mult} x#1# {} Mult if played hand has scoring {C:attention} 6 and 7 {}",
+        }
+    },
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if context.other_card:get_id() == 6 then
+                card.ability.extra.scored6 = true
+            end
+            if context.other_card:get_id() == 7 then
+                card.ability.extra.scored7 = true
+            end
+        end
+
+        if context.joker_main then
+            if card.ability.extra.scored6 and card.ability.extra.scored7 then
+                return {
+                    xmult = card.ability.extra.MultX
+                }
+            end
+            card.ability.extra.scored6 = false
+            card.ability.extra.scored7 = false
+        end
+    end
+}

@@ -6,7 +6,7 @@
     "description":"A Balatro Mod for Blue Pirs' and her Angelic Community~ Filled with Chaos.",
     "version":"0.0.1",
     "main_file":"main.lua",
-    "prefix":"bluePirMadness",
+    "prefix":"bpm",
     "priority":0,
     "badge_colour":"61f2ff",
     "badge_text_colour":"32434d",

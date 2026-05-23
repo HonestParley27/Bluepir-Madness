@@ -8,7 +8,7 @@ SMODS.Atlas {
 
 -- Blue Pairs
 SMODS.Joker {
-    key = "BluePairs",
+    key = "blue_pairs",
 
     config = {
         extra = {
@@ -32,8 +32,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Blue Pairs",
         text = {
-            "{X:mult,C:white} X#1# {} Mult when {C:attention}Two Pair{} is played",
-            "Gains {X:mult,C:white} X#2# {} Mult when {C:attention}Two Pair{} is played."
+            "{X:mult,C:white} X#1# {} Mult when {C:attention,E:2}Two Pair{} is played",
+            "Gains {X:mult,C:white} X#2# {} Mult when {C:attention,E:2}Two Pair{} is played."
         }
     },
 
@@ -76,8 +76,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Lucky Cloud",
         text = {
-            "{C:green}#1# in #2#{} chance to level up played hand,",
-            "when {C:attention}Two Pair{} is played."
+            "{C:green,E:1}#1# in #2#{} chance to level up played hand,",
+            "when {C:attention,E:2}Two Pair{} is played."
         }
     },
     

@@ -14,13 +14,19 @@ function BPMadness.ValdeckLookup(lookupVal, card, context)
     if type(lookupVal) ~= "number" then
         lookupVal = cardTable[lookupVal]
     end
-    local deck = G.deck.cards
+    local deck
+
+    if G.deck then
+        deck = G.deck.cards
+    end
+
     local total = 0
-    for _, card in ipairs(deck) do
-        if card:get_id() == lookupVal then
-            total = total + 1
+    if deck then
+        for _, card in ipairs(deck) do
+            if card:get_id() == lookupVal then
+                total = total + 1
+            end
         end
     end
-    
     return total
 end

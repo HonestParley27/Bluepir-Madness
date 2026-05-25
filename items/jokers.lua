@@ -34,8 +34,10 @@ SMODS.Joker {
     loc_txt = {
         name = "Blue Pairs",
         text = {
-            "{X:mult,C:white} X#1# {} Mult when {C:attention,E:2}Two Pair{} is played",
-            "Gains {X:mult,C:white} X#2# {} Mult when {C:attention,E:2}Two Pair{} is played."
+            "{X:mult,C:white} X#1# {} Mult when ",
+            "{C:attention,E:2}Two Pair{} is played",
+            "Gains {X:mult,C:white} X#2# {} Mult",
+            "when {C:attention,E:2}Two Pair{} is played."
         }
     },
 
@@ -79,7 +81,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Lucky Cloud",
         text = {
-            "{C:green,E:1}#1# in #2#{} chance to level up played hand,",
+            "{C:green,E:1}#1# in #2#{} chance to level up poker hand,",
             "when {C:attention,E:2}Two Pair{} is played."
         }
     },
@@ -132,7 +134,8 @@ SMODS.Joker {
         name = "Skip A Lime",
         text = {
             "Gains {C:money}$#1#{} per blind skipped.",
-            "{X:mult,C:white} +#2# {} Mult, where Mult is equal to Sell Value of Joker"
+            "{X:mult,C:white} +#2# {} Mult",
+            "where Mult is equal to Sell Value of Joker"
         }
     },
     calculate = function (self, card, context)
@@ -176,7 +179,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Short Circut",
         text = {
-            "Sets Gamespeed to x#1#, adds {C:white,X:mult} x#1# {} Mult"
+            "Sets Gamespeed to x#1#",
+            "adds {C:white,X:mult} x#1# {} Mult"
         }
     },
     calculate = function(self, card, context)
@@ -227,7 +231,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Vanium's Curse",
         text = {
-            "{C:white,X:mult} x#1# {} Mult if played hand has scoring {C:attention} 6 and 7 {}",
+            "{C:white,X:mult} x#1# {} Mult if played hand",
+            "has scoring {C:attention} 6 and 7 {}",
         }
     },
     calculate = function(self, card, context)
@@ -271,7 +276,10 @@ SMODS.Joker {
     end,
     loc_txt = {
         name = "Ad Astra",
-        text = {"{X:mult,C:white} x#1# {} Mult for each time {C:attention}poker hand{} has been played this run."}
+        text = {
+            "{X:mult,C:white} x#1# {} Mult for each time ",
+            "{C:attention}poker hand{} has been played this run.",
+        }
     },
 
     calculate = function(self, card, context)
@@ -346,6 +354,141 @@ SMODS.Joker {
         if context.joker_main then
             return {
                 chips = card.ability.extra.totalChipAdd
+            }
+        end
+    end
+}
+
+-- Australian Joker
+SMODS.Joker {
+    key = "australian_joker",
+    rarity = 3,
+    cost = 7,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    config = {},
+    loc_txt = {
+        name = "Australian Joker",
+        text = {"Swaps {C:mult}Mult{} and {C:chips}Chips{}","on hand played"}
+    },
+    calculate = function (self, card, context)
+        if context.final_scoring_step then
+            mult,hand_chips = hand_chips,mult
+        end
+    end
+}
+
+-- Blind Joker
+SMODS.Joker {
+    key = "blind_joker",
+    rarity = 3,
+    cost = 10,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    config = { extra = {
+        blindMult = 1,
+        blindgain = 0.1,
+        blindred = 0.01,
+        randomPokerHand = "High Card"
+    } },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.blindMult,
+                card.ability.extra.blindgain,
+                card.ability.extra.blindred,
+                card.ability.extra.randomPokerHand
+            },
+        }
+    end,
+    loc_txt = {
+        name = "Blind Joker",
+        text = {
+            "Changes Blind Requirement by {X:blind,C:white}x#1#{}",
+            "Gains {X:blind,C:white}x#2#{} if played hand is {C:attention}#4#{}",
+            "Loses {X:blind,C:white}x#3#{} if played hand is not {C:attention}#4#{}",
+            "{C:inactive,S:0.8}(Poker Hand changes each round){}"
+        }
+    },
+    add_to_deck = function (self, card, from_debuff)
+        card.ability.extra.randomPokerHand = BPMadness.randPokerHand(card.ability.extra.randomPokerHand,"Blind Joker")
+    end,
+    calculate = function (self, card, context)
+        if context.end_of_round and context.main_eval and not context.blueprint_card then
+            card.ability.extra.randomPokerHand = BPMadness.randPokerHand(card.ability.extra.randomPokerHand,
+                "Blind Joker")
+            return {
+                message = "Hand Changed!"
+            }
+        end
+        
+        if context.before and not context.blueprint_card then
+            if context.scoring_name == card.ability.extra.randomPokerHand then
+                card.ability.extra.blindMult = card.ability.extra.blindMult + card.ability.extra.blindgain
+                return {
+                message = "Increase!",
+                colour = G.C.DYN_UI.DARK
+                }
+            elseif context.scoring_name ~= card.ability.extra.randomPokerHand and not context.blueprint_card then
+                card.ability.extra.blindMult = card.ability.extra.blindMult - card.ability.extra.blindred
+                return {
+                    message = "Decrease!",
+                    colour = G.C.DYN_UI.DARK
+                }
+            end
+        end
+
+        if context.setting_blind then
+            G.GAME.blind.chips = math.floor(G.GAME.blind.chips * card.ability.extra.blindMult)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            return {
+                message = "Blind Up!",
+                colour = G.C.DYN_UI.DARK
+            }
+        end
+    end
+}
+
+-- WoodChipper
+SMODS.Joker {
+    key = "wood_chipper",
+    rarity = 3,
+    cost = 9,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    config = { extra = {
+        chipX = 0
+    } },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+            card.ability.extra.chipX
+        }}
+    end,
+    loc_txt = {
+        name = "Wood Chipper",
+        text = {
+            "If {C:attention}First Hand{} of round",
+            "has only {C:attention}1{} card, Gains {C:attention}one-fourth{} of",
+            "its rank as {X:chips,C:white}xChips{} and destroy card.",
+            "Currently {X:chips,C:white}x#1#{} Chips"
+        }
+    },
+    calculate = function (self, card, context)
+        if context.destroy_card and context.cardarea == G.play then
+            if G.GAME.current_round.hands_played <= 0 and #context.full_hand == 1 then
+                card.ability.extra.chipX = card.ability.extra.chipX + math.floor(context.destroy_card:get_id() / 4)
+
+                return {
+                    message = "Upgraded!",
+                    remove = true
+                }
+            end
+        end
+
+        if context.joker_main then
+            return {
+                xchips = card.ability.extra.chipX
             }
         end
     end

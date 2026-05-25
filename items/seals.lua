@@ -12,7 +12,7 @@ SMODS.Seal {
     pos = { x = 0, y = 0 },
     
     config = { extra = {
-        repeatTimes = 1
+        repeatTimes = 2
     } },
     
     loc_vars  = function (self, info_queue, card)
@@ -27,7 +27,7 @@ SMODS.Seal {
         name = "Cloud Seal",
         text = {
             "If Played hand is a {C:attention}Two Pair{}",
-             "Retrigger this card #1# time"
+             "Retrigger this card #1# times"
         }
     },
     calculate = function (self, card, context)

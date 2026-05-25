@@ -308,7 +308,11 @@ SMODS.Joker {
         chipAdd = 50,
         totalChipAdd = 0,
     } },
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
+        local card2Count = BPMadness.ValdeckLookup(2)
+        local card7Count = BPMadness.ValdeckLookup(7)
+
+        card.ability.extra.totalChipAdd = (card2Count + card7Count) * card.ability.extra.chipAdd
         return {
             vars = {
                 card.ability.extra.chipAdd,
@@ -328,25 +332,15 @@ SMODS.Joker {
         local card2Count = BPMadness.ValdeckLookup(2)
         local card7Count = BPMadness.ValdeckLookup(2)
 
-        card.ability.extra.totalChipAdd = math.min(card2Count,card7Count) * card.ability.extra.chipAdd
+        card.ability.extra.totalChipAdd = (card2Count + card7Count) * card.ability.extra.chipAdd
 
     end,
     calculate = function(self, card, context)
-        if
-        (context.playing_card_added or
-        context.remove_playing_cards or
-        context.change_rank or
-        context.end_of_round or
-        context.before or
-        context.setting_blind or
-        context.hand_drawn or
-        context.discard) and
-        not context.blueprint_card
-        then
+        if context.before then
             local card2Count = BPMadness.ValdeckLookup(2)
             local card7Count = BPMadness.ValdeckLookup(7)
 
-            card.ability.extra.totalChipAdd = math.min(card2Count, card7Count) * card.ability.extra.chipAdd
+            card.ability.extra.totalChipAdd = (card2Count + card7Count) * card.ability.extra.chipAdd
         end
         
         if context.joker_main then

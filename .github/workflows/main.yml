@@ -1,7 +1,8 @@
 name: Release
+
 permissions:
   contents: write
-  
+
 on:
   push:
     tags:
@@ -10,5 +11,11 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
+      - uses: actions/checkout@v4
+
       - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}

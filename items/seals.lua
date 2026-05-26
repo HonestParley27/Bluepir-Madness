@@ -6,7 +6,7 @@ SMODS.Atlas {
 }
 
 SMODS.Seal {
-    key       = "cloud",
+    key = "cloud",
     badge_colour = G.C.CHIPS,
     atlas = "test_seal",
     pos = { x = 0, y = 0 },

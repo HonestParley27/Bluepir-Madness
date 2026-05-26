@@ -265,7 +265,7 @@ SMODS.Joker {
     cost = 5,
     pos = { x = 0, y = 0 },
     config = { extra = {
-       MultX = 0.5 
+       MultX = 0.25 
     } },
     loc_vars = function (self, info_queue, card)
         return {
@@ -298,12 +298,6 @@ SMODS.Joker {
         end
     end
 }
---[[
-
-Ad Astra probarbly requires balancing, as the x0.5 mult may be a bit of powerful scaling
-especially when paired with other multipliers, or even a possibly exponential growth mult.
-
-]]
 
 -- Herbcat ( 'w' )
 SMODS.Joker {

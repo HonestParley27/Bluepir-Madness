@@ -1,8 +1,8 @@
 {
     "id":"bpMadness",
-    "name":"Blue Pirs' Madness",
+    "name":"Blue Pirs' Madness ",
     "display_name": "Blue Pirs' Madness",
-    "author":["HonestParley27 ( Developer )","JustNotSebas ( Developer )","Blue Pirs ( Artist )"],
+    "author":["HonestParley27 ( Developer and Artist )","JustNotSebas ( Developer )","Blue Pirs ( Artist and Angel )"],
     "description":"A Balatro Mod for Blue Pirs' and her Angelic Community~ Filled with Chaos.",
     "version":"0.0.1",
     "main_file":"main.lua",

@@ -286,7 +286,7 @@ SMODS.Joker {
         
         if context.joker_main then
             local totalMult = 1
-            totalMult = G.GAME.hands["" .. context.scoring_name].played * card.ability.extra.MultX + 0.5
+            totalMult = G.GAME.hands["" .. context.scoring_name].played * card.ability.extra.MultX + totalMult
             
             if totalMult < 1 then
                 totalMult = 1

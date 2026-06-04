@@ -8,8 +8,8 @@ SMODS.Atlas {
 
 -- Need to Re-format the text / descriptions.
 
--- Blue Pairs
-SMODS.Joker {
+
+SMODS.Joker { -- Blue Pairs
     key = "blue_pairs",
 
     config = {
@@ -59,8 +59,8 @@ SMODS.Joker {
     end
 }
 
--- Lucky Cloud
-SMODS.Joker {
+
+SMODS.Joker { -- Lucky Cloud
     key = "lucky_cloud",
     rarity = 2,
     atlas = "TestJoker",
@@ -103,8 +103,8 @@ SMODS.Joker {
     end
 }
 
--- Skip a Lime
-SMODS.Joker {
+
+SMODS.Joker { -- Skip a Lime
     key = "skip_a_lime",
     cost = 3,
     config = { extra = {
@@ -157,8 +157,8 @@ SMODS.Joker {
     end
 }
 
--- Short Circut
-SMODS.Joker {
+
+SMODS.Joker { -- Short Circut
     key = "short_circut",
     config = { extra = {
         speedmult = 4,
@@ -207,12 +207,14 @@ SMODS.Joker {
 }
 
 
--- Vanium's Curse
-SMODS.Joker {
+
+SMODS.Joker { -- Vanium's Curse
     key = "vanium_curse",
     config = {
         extra = {
             MultX = 0.67,
+            GoodMultX = 6.7,
+            goodChance = 10,
             scored6 = false,
             scored7 = false
         }
@@ -222,17 +224,22 @@ SMODS.Joker {
     rarity = 1,
     cost = 3,
     loc_vars = function(self, info_queue, card)
-        return {
+        local num,dem = SMODS.get_probability_vars(card,1,card.ability.extra.goodChance,"Vanium's Curse")
+        return { -- Added the probarbility chance feature
             vars = {
-                card.ability.extra.MultX
+                card.ability.extra.MultX,
+                card.ability.extra.GoodMultX,
+                num,
+                dem
             }
         }
     end,
     loc_txt = {
         name = "Vanium's Curse",
         text = {
-            "{C:white,X:mult} x#1# {} Mult if played hand",
-            "has scoring {C:attention} 6 and 7 {}",
+            "If hand has a scoring {C:attention}6 and 7 {}",
+            "{C:green,E:1}#3# in #4#{} to give {X:mult,C:white}x#2#{} Mult",
+            "else,gives {X:mult,C:white}x#1#{} Mult"
         }
     },
     calculate = function(self, card, context)
@@ -247,9 +254,15 @@ SMODS.Joker {
 
         if context.joker_main then
             if card.ability.extra.scored6 and card.ability.extra.scored7 then
-                return {
-                    xmult = card.ability.extra.MultX
-                }
+                if SMODS.pseudorandom_probability(card, "Vanium's Curse", 1, card.ability.extra.goodChance) then
+                    return {
+                        xmult = card.ability.extra.GoodMultX
+                    }
+                else
+                    return {
+                        xmult = card.ability.extra.MultX
+                    }
+                end
             end
             card.ability.extra.scored6 = false
             card.ability.extra.scored7 = false
@@ -257,15 +270,15 @@ SMODS.Joker {
     end
 }
 
--- Ad Astra
-SMODS.Joker {
+
+SMODS.Joker { -- Ad Astra
     key = "ad_astra",
     atlas = "TestJoker",
     rarity = 2,
     cost = 5,
     pos = { x = 0, y = 0 },
     config = { extra = {
-       MultX = 0.25 
+       MultX = 0.1 -- nerfed to x0.1
     } },
     loc_vars = function (self, info_queue, card)
         return {
@@ -288,9 +301,6 @@ SMODS.Joker {
             local totalMult = 1
             totalMult = G.GAME.hands["" .. context.scoring_name].played * card.ability.extra.MultX + totalMult
             
-            if totalMult < 1 then
-                totalMult = 1
-            end
 
             return {
                 xmult = totalMult
@@ -299,8 +309,8 @@ SMODS.Joker {
     end
 }
 
--- Herbcat ( 'w' )
-SMODS.Joker {
+
+SMODS.Joker { -- Herbcat ( 'w' )
     key = "herb_cat",
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -353,8 +363,7 @@ SMODS.Joker {
     end
 }
 
--- Australian Joker
-SMODS.Joker {
+SMODS.Joker { -- Herbcat ( 'w' )
     key = "australian_joker",
     rarity = 3,
     cost = 7,
@@ -366,14 +375,14 @@ SMODS.Joker {
         text = {"Swaps {C:mult}Mult{} and {C:chips}Chips{}","on hand played"}
     },
     calculate = function (self, card, context)
-        if context.final_scoring_step then
-            mult,hand_chips = hand_chips,mult
+        if context.initial_scoring_step then
+            mult,hand_chips = hand_chips,mult -- there might be a return function for this but i can't be bothered.
         end
     end
 }
 
--- Blind Joker
-SMODS.Joker {
+
+SMODS.Joker { -- Herbcat ( 'w' )
     key = "blind_joker",
     rarity = 3,
     cost = 10,
@@ -443,15 +452,15 @@ SMODS.Joker {
     end
 }
 
--- WoodChipper
-SMODS.Joker {
+
+SMODS.Joker { -- Herbcat ( 'w' )
     key = "wood_chipper",
     rarity = 3,
     cost = 9,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     config = { extra = {
-        chipX = 0
+        chipX = 1
     } },
     loc_vars = function (self, info_queue, card)
         return {
@@ -487,3 +496,63 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker { -- Angels
+    key = "angels",
+    rarity = 4,
+    cost = 20,
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    config = {
+        extra = {
+            MultX = BPMadness.community_mult,
+            MultGain = 1,
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        BPMadness.update_community_mult()
+        card.ability.extra.MultX = BPMadness.community_mult
+        return {
+            vars = {
+                card.ability.extra.MultX,
+                card.ability.extra.MultGain
+            }
+        }
+    end,
+    loc_txt = {
+        name = "{C:blue}Angels{}",
+        text = {
+            "Gains {X:mult,C:white}x#2#{} Mult",
+            "Per member of {C:blue}Blue's{} Discord, and each follower {C:blue}Blue{} has on Twitch",
+            "Currently {X:mult,C:white}x#1#{} Mult",
+        }
+    },
+    calculate = function (self, card, context)
+        if context.joker_main then
+            card.ability.extra.MultX = BPMadness.community_mult
+            return {
+                xmult = card.ability.extra.MultX
+            }
+        end
+    end
+}
+
+
+SMODS.Joker { -- Double Vision
+    key = "double_vision",
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    cost = 10,
+    rarity = 3,
+    loc_txt = {
+        name = "Double Vision",
+        text = {"All {C:attention,E:2}Pairs{} are now {C:attention,E:2}Two Pairs{}"}
+    },
+    add_to_deck = function (self, card, from_debuff)
+        BPMadness.doubleVisionCheck = true
+    end,
+    remove_from_deck = function (self, card, from_debuff)
+        BPMadness.doubleVisionCheck = false
+    end
+}
+

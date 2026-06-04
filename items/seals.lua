@@ -33,7 +33,7 @@ SMODS.Seal {
     calculate = function (self, card, context)
         if context.repetition and context.scoring_name == "Two Pair" then
             return {
-                repetitions = 1,
+                repetitions = card.ability.extra.repeatTimes,
                 card = card
             }
         end    

@@ -1,17 +1,30 @@
+local function getModdedJoker(id, rarities)
+    rarities = rarities or { 1, 2, 3 }
+    id = id or "bpMadness"
+
+    print(rarities)
+    print(id)
+
+    local ret = {}
+    for _, r in ipairs(rarities) do
+        for i, v in pairs(SMODS.Centers) do
+            if v.set == "Joker" then
+                if v.rarity == r and v.mod.id == id then
+                    ret[i] = true
+                end
+            end
+        end
+    end
+    print(ret)
+    return ret
+end
+
+
+
+
 SMODS.ObjectType ({
     key = "BPMadness_Jokers",
     default = "j_jimbo",
-    cards = {
-        j_bpm_short_circut = true,
-        j_bpm_australian_joker = true,
-        j_bpm_blind_joker = true,
-        j_bpm_lucky_cloud = true,
-        j_bpm_blue_pairs = true,
-        j_bpm_ad_astra = true,
-        j_bpm_wood_chipper = true,
-        j_bpm_herb_cat = true,
-        j_bpm_skip_a_lime = true,
-        j_bpm_vanium_curse = true
-    },
+    cards = getModdedJoker("bpMadness",{1,2,3})
 
 })

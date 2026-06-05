@@ -1,4 +1,4 @@
-SMODS.Atlas {
+SMODS.Atlas { -- sprite for cloud seal
     key = "test_seal",
     path = "TestSeal.png",
     px = 71,
@@ -6,36 +6,36 @@ SMODS.Atlas {
 }
 
 SMODS.Seal {
-    key = "cloud",
+    key          = "cloud",
     badge_colour = G.C.CHIPS,
-    atlas = "test_seal",
-    pos = { x = 0, y = 0 },
-    
-    config = { extra = {
-        repeatTimes = 2
+    atlas        = "test_seal",
+    pos          = { x = 0, y = 0 },
+
+    config       = { extra = {
+        repeatTimes = 2 -- repeat two times
     } },
-    
-    loc_vars  = function (self, info_queue, card)
+
+    loc_vars     = function(self, info_queue, card)
         return {
             vars = {
                 self.config.extra.repeatTimes
             }
         }
     end,
-    loc_txt   = {
+    loc_txt      = {
         label = "Cloud Seal",
         name = "Cloud Seal",
         text = {
             "If Played hand is a {C:attention}Two Pair{}",
-             "Retrigger this card #1# times"
+            "Retrigger this card #1# times"
         }
     },
-    calculate = function (self, card, context)
-        if context.repetition and context.scoring_name == "Two Pair" then
+    calculate    = function(self, card, context)
+        if context.repetition and context.scoring_name == "Two Pair" then -- if the scoring hand is a two pair
             return {
-                repetitions = card.ability.extra.repeatTimes,
-                card = card
+                repetitions = card.ability.extra.repeatTimes,             -- repeat #repeatTimes
+                card = card                                               -- the card played
             }
-        end    
+        end
     end
 }

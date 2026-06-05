@@ -382,7 +382,7 @@ SMODS.Joker { -- Herbcat ( 'w' )
 }
 
 
-SMODS.Joker { -- Herbcat ( 'w' )
+SMODS.Joker { -- Blind Joker
     key = "blind_joker",
     rarity = 3,
     cost = 10,

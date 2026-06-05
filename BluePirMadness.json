@@ -1,16 +1,20 @@
 {
-    "id":"bpMadness",
-    "name":"Blue Pirs' Madness ",
-    "display_name": "Blue Pirs' Madness",
-    "author":["HonestParley27 ( Developer and Artist )","JustNotSebas ( Developer )","Blue Pirs ( Artist and Angel )"],
-    "description":"A Balatro Mod for Blue Pirs' and her Angelic Community~ Filled with Chaos.",
-    "version":"0.0.1",
-    "main_file":"main.lua",
-    "prefix":"bpm",
-    "priority":0,
-    "badge_colour":"61f2ff",
-    "badge_text_colour":"32434d",
-    "dependencies":[
+    "id": "bpMadness",
+    "name": "Bluepir's Madness",
+    "display_name": "Bluepir's Madness",
+    "author": [
+        "HonestParley27 (Developer and Artist)",
+        "JustNotSebas (Developer)",
+        "Bluepirs (Artist and Angel)"
+    ],
+    "description": "A Balatro mod for Bluepirs and her angelic community~",
+    "version": "0.0.1",
+    "main_file": "main.lua",
+    "prefix": "bpm",
+    "priority": 0,
+    "badge_colour": "61f2ff",
+    "badge_text_colour": "32434d",
+    "dependencies": [
         "Steamodded (>=1.0.0~ALPHA-1225a)"
     ]
 }

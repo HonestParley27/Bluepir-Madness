@@ -555,7 +555,7 @@ SMODS.Joker { -- Double Vision
 }
 
 
-SMODS.Joker {
+SMODS.Joker { -- Snowball
     key = "snowball",
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -589,7 +589,8 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.before and not context.blueprint_card then
             if not card.ability.extra.lastPlayed then                                              -- if there's no previous hand
-                card.ability.extra.lastPlayed = context.scoring_name                               -- save the current scored hand
+                card.ability.extra.lastPlayed = context
+                    .scoring_name                                                                  -- save the current scored hand
             elseif card.ability.extra.lastPlayed == context.scoring_name then                      -- if there's a previous hand
                 card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultGain -- set xmult
             else                                                                                   -- if previous hand doesnt match

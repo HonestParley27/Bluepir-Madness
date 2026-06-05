@@ -1,4 +1,4 @@
-SMODS.Atlas {
+SMODS.Atlas { -- Sprite for all test jokers
     key = "TestJoker",
     path = "test_joker.png",
     px = 71,
@@ -6,28 +6,24 @@ SMODS.Atlas {
 
 }
 
--- Need to Re-format the text / descriptions.
-
-
 SMODS.Joker { -- Blue Pairs
     key = "blue_pairs",
-
     config = {
         extra = {
-            xMult = 1,
-            xMultgain = 0.25
+            xMult = 1,       -- Original mult
+            xMultgain = 0.25 -- Gain per condition
         }
     },
-    rarity = 2,
+    rarity = 2, -- uncommon
     atlas = "TestJoker",
-    pos = { x = 0, y = 0},
-    cost = 5,
+    pos = { x = 0, y = 0 },
+    cost = 5, -- card cost in shop
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.extra.xMult,
                 card.ability.extra.xMultgain
-        
+
             }
         }
     end,
@@ -41,17 +37,17 @@ SMODS.Joker { -- Blue Pairs
         }
     },
 
-    calculate = function (self, card, context)
-        if context.joker_main then
-            if context.scoring_name == 'Two Pair' then
+    calculate = function(self, card, context)
+        if context.joker_main then                     -- if on joker context
+            if context.scoring_name == 'Two Pair' then -- and played hand is a two pair
                 return {
-                    xmult = card.ability.extra.xMult
+                    xmult = card.ability.extra.xMult   -- adds mult
                 }
             end
         end
 
-        if context.before and context.scoring_name == "Two Pair" and not context.blueprint_card then
-            card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultgain
+        if context.before and context.scoring_name == "Two Pair" and not context.blueprint_card then -- if two pair scores but not a blueprint
+            card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultgain       -- add more mult
             return {
                 message = "Upgraded!"
             }
@@ -60,17 +56,17 @@ SMODS.Joker { -- Blue Pairs
 }
 
 
-SMODS.Joker { -- Lucky Cloud
+SMODS.Joker {   -- Lucky Cloud
     key = "lucky_cloud",
-    rarity = 2,
+    rarity = 2, -- uncommon
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
-    cost = 6,
+    cost = 6,        -- cost in shop
     config = { extra = {
-        lvChance = 3
+        lvChance = 3 -- num/3 chance
     } },
-    loc_vars = function (self, info_queue, card)
-        local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.lvChance, "Lucky Cloud")
+    loc_vars = function(self, info_queue, card)
+        local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.lvChance, "Lucky Cloud") -- 1 in 3 chance to upgrade
         return {
             vars = {
                 num,
@@ -85,11 +81,11 @@ SMODS.Joker { -- Lucky Cloud
             "when {C:attention,E:2}Two Pair{} is played."
         }
     },
-    
-    calculate = function (self, card, context)
-        if context.before and context.scoring_name == "Two Pair" then
-            if SMODS.pseudorandom_probability(card, "Lucky Cloud", 1, card.ability.extra.lvChance) then
-                SMODS.upgrade_poker_hands({
+
+    calculate = function(self, card, context)
+        if context.before and context.scoring_name == "Two Pair" then                                   -- before scoring, if played a two pair
+            if SMODS.pseudorandom_probability(card, "Lucky Cloud", 1, card.ability.extra.lvChance) then -- if gambling hits
+                SMODS.upgrade_poker_hands({                                                             -- upgrade two pair
                     hands = { 'Two Pair' },
                     level_up = 1,
                     from = card,
@@ -108,22 +104,22 @@ SMODS.Joker { -- Skip a Lime
     key = "skip_a_lime",
     cost = 3,
     config = { extra = {
-        sellValGain = 3,
-        originalSellVal = 0,
-        plusMult = 1
+        sellValGain = 3,     -- gain sell value
+        originalSellVal = 0, -- original sell value
+        plusMult = 1         -- additional mult
     } },
-    rarity = 1,
+    rarity = 1,              -- common
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     loc_vars = function(self, info_queue, card)
         local mu = 0
-        if card.cost/2 < 1 then
-            mu = 1
+        if card.cost / 2 < 1 then
+            mu = 1                              -- card mult can't be lower than 1
         else
-            mu = math.floor(card.cost/2)
+            mu = math.floor(card.cost / 2)      -- mult will be half the cost
         end
-        card.ability.extra.originalSellVal = mu
-        return{
+        card.ability.extra.originalSellVal = mu -- sell value = mult
+        return {
             vars = {
                 card.ability.extra.sellValGain,
                 card.ability.extra.plusMult
@@ -138,11 +134,12 @@ SMODS.Joker { -- Skip a Lime
             "where Mult is equal to Sell Value of Joker"
         }
     },
-    calculate = function (self, card, context)
-        if context.skip_blind and not context.blueprint_card then
-            card.ability.extra_value = card.ability.extra_value + card.ability.extra.sellValGain
-            card.ability.extra.plusMult = card.ability.extra.originalSellVal + card.ability.extra_value
-            card:set_cost()
+    calculate = function(self, card, context)
+        if context.skip_blind and not context.blueprint_card then                                       -- when skipping a blind but not blueprint
+            card.ability.extra_value = card.ability.extra_value + card.ability.extra
+                .sellValGain                                                                            -- add to the sell value
+            card.ability.extra.plusMult = card.ability.extra.originalSellVal + card.ability.extra_value -- add to mult
+            card:set_cost()                                                                             -- set value
 
             return {
                 message = "Upgraded!"
@@ -151,7 +148,7 @@ SMODS.Joker { -- Skip a Lime
 
         if context.joker_main then
             return {
-                mult = card.ability.extra.plusMult
+                mult = card.ability.extra.plusMult -- when on joker context, add mult
             }
         end
     end
@@ -184,8 +181,7 @@ SMODS.Joker { -- Short Circut
         }
     },
     calculate = function(self, card, context)
-
-        if G.SETTINGS.GAMESPEED ~= 4 and card.ability.extra.enabled and not context.blueprint_card  then
+        if G.SETTINGS.GAMESPEED ~= 4 and card.ability.extra.enabled and not context.blueprint_card then
             G.SETTINGS.GAMESPEED = 4
         end
 
@@ -196,11 +192,9 @@ SMODS.Joker { -- Short Circut
         end
     end,
     add_to_deck = function(self, card, from_debuff)
-        
         card.ability.extra.originalGameSpeed = G.SETTINGS.GAMESPEED
-
     end,
-    remove_from_deck = function (self, card, from_debuff)
+    remove_from_deck = function(self, card, from_debuff)
         G.SETTINGS.GAMESPEED = card.ability.extra.originalGameSpeed
     end
 
@@ -224,7 +218,7 @@ SMODS.Joker { -- Vanium's Curse
     rarity = 1,
     cost = 3,
     loc_vars = function(self, info_queue, card)
-        local num,dem = SMODS.get_probability_vars(card,1,card.ability.extra.goodChance,"Vanium's Curse")
+        local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.goodChance, "Vanium's Curse")
         return { -- Added the probarbility chance feature
             vars = {
                 card.ability.extra.MultX,
@@ -278,9 +272,9 @@ SMODS.Joker { -- Ad Astra
     cost = 5,
     pos = { x = 0, y = 0 },
     config = { extra = {
-       MultX = 0.1 -- nerfed to x0.1
+        MultX = 0.1 -- nerfed to x0.1
     } },
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.extra.MultX
@@ -296,11 +290,10 @@ SMODS.Joker { -- Ad Astra
     },
 
     calculate = function(self, card, context)
-        
         if context.joker_main then
             local totalMult = 1
             totalMult = G.GAME.hands["" .. context.scoring_name].played * card.ability.extra.MultX + totalMult
-            
+
 
             return {
                 xmult = totalMult
@@ -345,7 +338,6 @@ SMODS.Joker { -- Herbcat ( 'w' )
         local card7Count = BPMadness.ValdeckLookup(2)
 
         card.ability.extra.totalChipAdd = (card2Count + card7Count) * card.ability.extra.chipAdd
-
     end,
     calculate = function(self, card, context)
         if context.before then
@@ -354,7 +346,7 @@ SMODS.Joker { -- Herbcat ( 'w' )
 
             card.ability.extra.totalChipAdd = (card2Count + card7Count) * card.ability.extra.chipAdd
         end
-        
+
         if context.joker_main then
             return {
                 chips = card.ability.extra.totalChipAdd
@@ -372,11 +364,11 @@ SMODS.Joker { -- Herbcat ( 'w' )
     config = {},
     loc_txt = {
         name = "Australian Joker",
-        text = {"Swaps {C:mult}Mult{} and {C:chips}Chips{}","on hand played"}
+        text = { "Swaps {C:mult}Mult{} and {C:chips}Chips{}", "on hand played" }
     },
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.initial_scoring_step then
-            mult,hand_chips = hand_chips,mult -- there might be a return function for this but i can't be bothered.
+            mult, hand_chips = hand_chips, mult -- there might be a return function for this but i can't be bothered.
         end
     end
 }
@@ -394,7 +386,7 @@ SMODS.Joker { -- Blind Joker
         blindred = 0.01,
         randomPokerHand = "High Card"
     } },
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.extra.blindMult,
@@ -413,10 +405,10 @@ SMODS.Joker { -- Blind Joker
             "{C:inactive,S:0.8}(Poker Hand changes each round){}"
         }
     },
-    add_to_deck = function (self, card, from_debuff)
-        card.ability.extra.randomPokerHand = BPMadness.randPokerHand(card.ability.extra.randomPokerHand,"Blind Joker")
+    add_to_deck = function(self, card, from_debuff)
+        card.ability.extra.randomPokerHand = BPMadness.randPokerHand(card.ability.extra.randomPokerHand, "Blind Joker")
     end,
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.end_of_round and context.main_eval and not context.blueprint_card then
             card.ability.extra.randomPokerHand = BPMadness.randPokerHand(card.ability.extra.randomPokerHand,
                 "Blind Joker")
@@ -424,13 +416,13 @@ SMODS.Joker { -- Blind Joker
                 message = "Hand Changed!"
             }
         end
-        
+
         if context.before and not context.blueprint_card then
             if context.scoring_name == card.ability.extra.randomPokerHand then
                 card.ability.extra.blindMult = card.ability.extra.blindMult + card.ability.extra.blindgain
                 return {
-                message = "Increase!",
-                colour = G.C.DYN_UI.DARK
+                    message = "Increase!",
+                    colour = G.C.DYN_UI.DARK
                 }
             elseif context.scoring_name ~= card.ability.extra.randomPokerHand and not context.blueprint_card then
                 card.ability.extra.blindMult = card.ability.extra.blindMult - card.ability.extra.blindred
@@ -462,11 +454,12 @@ SMODS.Joker { -- Herbcat ( 'w' )
     config = { extra = {
         chipX = 1
     } },
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
-            card.ability.extra.chipX
-        }}
+                card.ability.extra.chipX
+            }
+        }
     end,
     loc_txt = {
         name = "Wood Chipper",
@@ -477,7 +470,7 @@ SMODS.Joker { -- Herbcat ( 'w' )
             "Currently {X:chips,C:white}x#1#{} Chips"
         }
     },
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.destroy_card and context.cardarea == G.play then
             if G.GAME.current_round.hands_played <= 0 and #context.full_hand == 1 then
                 card.ability.extra.chipX = card.ability.extra.chipX + math.floor(context.destroy_card:get_id() / 4)
@@ -527,7 +520,7 @@ SMODS.Joker { -- Angels
             "Currently {X:mult,C:white}x#1#{} Mult",
         }
     },
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.joker_main then
             card.ability.extra.MultX = BPMadness.community_mult
             return {
@@ -546,13 +539,12 @@ SMODS.Joker { -- Double Vision
     rarity = 3,
     loc_txt = {
         name = "Double Vision",
-        text = {"All {C:attention,E:2}Pairs{} are now {C:attention,E:2}Two Pairs{}"}
+        text = { "All {C:attention,E:2}Pairs{} are now {C:attention,E:2}Two Pairs{}" }
     },
-    add_to_deck = function (self, card, from_debuff)
+    add_to_deck = function(self, card, from_debuff)
         BPMadness.doubleVisionCheck = true
     end,
-    remove_from_deck = function (self, card, from_debuff)
+    remove_from_deck = function(self, card, from_debuff)
         BPMadness.doubleVisionCheck = false
     end
 }
-

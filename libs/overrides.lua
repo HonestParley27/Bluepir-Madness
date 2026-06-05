@@ -1,37 +1,34 @@
-local upd = Game.update
+local upd = Game.update -- Save the original game functions
 function Game:update(dt)
     upd(self, dt)
     if not BPMadness.memberDelay then
-        BPMadness.memberDelay = 0
+        BPMadness.memberDelay = 0 -- Set up the delay
     end
     if (BPMadness.memberDelay > 20) or not BPMadness.community_mult then
         if BPMadness.update_community_mult then
-            BPMadness.update_community_mult()
+            BPMadness.update_community_mult() -- Update the community_mult for the Angels joker
             print(BPMadness.community_mult)
-        end -- i honestly hate nil checks like this, wish there was a shorthand
+        end
         BPMadness.memberDelay = 0
     else
-        BPMadness.memberDelay = BPMadness.memberDelay + dt
+        BPMadness.memberDelay = BPMadness.memberDelay + dt -- Delayed on deltatime
     end
 end
 
-local evalHand = evaluate_poker_hand
+local evalHand = evaluate_poker_hand -- Original game function
 function evaluate_poker_hand(hand)
-    local ret = evalHand(hand)
+    local ret = evalHand(hand)       -- LocalThunk why do you hate yourself this much
 
     if BPMadness.doubleVisionCheck then
-        if #ret["Pair"] > 0 and #ret["Two Pair"] == 0 then
-            ret ["Two Pair"] = ret["Pair"]
+        if #ret["Pair"] > 0 and #ret["Two Pair"] == 0 then -- If there's a least a pair but no two pairs...
+            ret["Two Pair"] = ret["Pair"]                  -- then set the two pairs as the pairs
         end
     end
-
-
-    return ret
+    return ret -- and return the madness back
 end
 
-local originalEvalCard = eval_card
-function eval_card(card,context)
-    local ret,post = originalEvalCard(card, context)
-    print(ret)
-    return ret,post
+local cardEval = eval_card -- Original game function
+function eval_card(card, context)
+    local ret, post = cardEval(card, context)
+    return ret, post
 end

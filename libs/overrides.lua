@@ -29,9 +29,9 @@ function evaluate_poker_hand(hand)
     return ret
 end
 
-local cardEval = eval_card
-function eval_card(card, context)
-    local ret = cardEval(card, context)
+local originalEvalCard = eval_card
+function eval_card(card,context)
+    local ret,post = originalEvalCard(card, context)
     print(ret)
-    return ret
+    return ret,post
 end

@@ -162,7 +162,7 @@ SMODS.Joker { -- Short Circut
         originalGameSpeed = 1, -- original game speed
         enabled = true
     } },
-    rarity = 3,
+    rarity = 3, -- Rare
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     cost = 10,
@@ -215,7 +215,7 @@ SMODS.Joker { -- Vanium's Curse
     },
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
-    rarity = 1,
+    rarity = 1, -- Common
     cost = 3,
     loc_vars = function(self, info_queue, card)
         local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.goodChance, "Vanium's Curse") -- 1 in 10 chance
@@ -269,7 +269,7 @@ SMODS.Joker { -- Vanium's Curse
 SMODS.Joker { -- Ad Astra
     key = "ad_astra",
     atlas = "TestJoker",
-    rarity = 2,
+    rarity = 2, -- Uncommon
     cost = 5,
     pos = { x = 0, y = 0 },
     config = { extra = {
@@ -308,7 +308,7 @@ SMODS.Joker { -- Herbcat ( 'w' )
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     cost = 3,
-    rarity = 1,
+    rarity = 1,           -- Common
     config = { extra = {
         chipAdd = 25,     -- chips added per card
         totalChipAdd = 0, -- total chips added
@@ -355,9 +355,9 @@ SMODS.Joker { -- Herbcat ( 'w' )
     end
 }
 
-SMODS.Joker { -- Australian Joker 🐨
+SMODS.Joker {   -- Australian Joker 🐨
     key = "australian_joker",
-    rarity = 3,
+    rarity = 3, -- Rare
     cost = 7,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -377,9 +377,9 @@ SMODS.Joker { -- Australian Joker 🐨
 }
 
 
-SMODS.Joker { -- Blind Joker
+SMODS.Joker {   -- Blind Joker
     key = "blind_joker",
-    rarity = 3,
+    rarity = 3, -- Rare
     cost = 10,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -449,9 +449,9 @@ SMODS.Joker { -- Blind Joker
 }
 
 
-SMODS.Joker { -- Wood Chipper
+SMODS.Joker {   -- Wood Chipper
     key = "wood_chipper",
-    rarity = 3,
+    rarity = 3, -- Rare
     cost = 9,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -495,9 +495,9 @@ SMODS.Joker { -- Wood Chipper
     end
 }
 
-SMODS.Joker { -- Angels
+SMODS.Joker {   -- Angels
     key = "angels",
-    rarity = 4,
+    rarity = 4, -- Legendary
     cost = 20,
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
@@ -541,7 +541,7 @@ SMODS.Joker { -- Double Vision
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     cost = 10,
-    rarity = 3,
+    rarity = 3, -- Rare
     loc_txt = {
         name = "Double Vision",
         text = { "All {C:attention,E:2}Pairs{} are now {C:attention,E:2}Two Pairs{}" }
@@ -560,7 +560,7 @@ SMODS.Joker { -- Snowball
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     cost = 10,
-    rarity = 3,
+    rarity = 3, -- Rare
     config = {
         extra = {
             xMult = 1,        -- original xmult
@@ -607,6 +607,58 @@ SMODS.Joker { -- Snowball
             return {
                 xmult = card.ability.extra.xMult -- apply xmult
             }
+        end
+    end
+}
+
+SMODS.Joker { -- Bluefrin
+    key = "bluefrin",
+    atlas = "TestJoker",
+    pos = { x = 0, y = 0 },
+    cost = 20,
+    rarity = 4,               -- Legendary
+    blueprint_compat = false, -- Blueprint can't copy Bluefrin
+    eternal_compat = false,   -- Eternal stickers can't spawn on Bluefrin
+    config = {
+        extra = {
+            remainingSaves = 5 -- Times to preventh Death
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.remainingSaves
+            }
+        }
+    end,
+    loc_txt = {
+        name = "Bluefrin",
+        text = {
+            "If played hand is a {C:attention}Two Pair{},",
+            "prevents Death {C:green,E:1}#1# more time(s).{}",
+            "{C:red,E:2}Self destructs.{}"
+        }
+    },
+
+    calculate = function(self, card, context)                                             -- probably need to rewrite this into a proper event
+        if context.end_of_round and context.game_over then                                -- if on end of round and on game over
+            if context.scoring_name == 'Two Pair' then                                    -- if scored a two pair
+                card.ability.extra.remainingSaves = card.ability.extra.remainingSaves - 1 -- remove one from counter
+
+                if card.ability.extra.remainingSaves == 0 then                            -- if no more saves
+                    SMODS.destroy_cards(card, nil, false)                                 -- destroy the card
+                    return {
+                        message = "Extinct!",                                             -- message
+                        saved = "Saved by Bluefrin!",                                     -- save round
+
+                    }
+                end
+
+                return {
+                    message = (card.ability.extra.remainingSaves .. " remaining!"), -- number of saves remaining
+                    saved = "Saved by Bluefrin!"                                    -- save round
+                }
+            end
         end
     end
 }

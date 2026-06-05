@@ -445,7 +445,7 @@ SMODS.Joker { -- Blind Joker
 }
 
 
-SMODS.Joker { -- Herbcat ( 'w' )
+SMODS.Joker { -- Wood Chipper
     key = "wood_chipper",
     rarity = 3,
     cost = 9,

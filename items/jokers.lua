@@ -594,7 +594,11 @@ SMODS.Joker { -- Snowball
             elseif card.ability.extra.lastPlayed == context.scoring_name then                      -- if there's a previous hand
                 card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultGain -- set xmult
             else                                                                                   -- if previous hand doesnt match
-                card.ability.extra.xMult = 1                                                       -- then reset
+                if card.ability.extra.xMult == 1 then                                              -- if already x1 no need to reset anything
+                    card.ability.extra.lastPlayed = context.scoring_name
+                    return {}
+                end
+                card.ability.extra.xMult = 1 -- then reset
                 card.ability.extra.lastPlayed = context.scoring_name
                 return {
                     message = "Reset!"

@@ -545,12 +545,14 @@ SMODS.Joker { -- Double Vision
     loc_txt = {
         name = "Double Vision",
         text = { "All {C:attention,E:2}Pairs{} are now {C:attention,E:2}Two Pairs{}" }
-    },
-    add_to_deck = function(self, card, from_debuff)
-        BPMadness.doubleVisionCheck = true -- enable double_vision check when bought
-    end,
+    }, -- This is pretty much an empty shell since all logic resides in overrides.lua
     remove_from_deck = function(self, card, from_debuff)
-        BPMadness.doubleVisionCheck = false -- disable check when destroyed
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.hand:unhighlight_all() -- If selling, unhighlight all cards; Just in case.
+                return true
+            end
+        }))
     end
 }
 

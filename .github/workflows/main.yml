@@ -22,9 +22,9 @@ jobs:
         run: |
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
           if [ -z "$PREV_TAG" ]; then
-            LOG=$(git log --pretty=format:"* %s" )
+            LOG=$(git log --pretty=format:"* %s by @%an" )
           else
-            LOG=$(git log --pretty=format:"* %s" $PREV_TAG..HEAD)
+            LOG=$(git log --pretty=format:"* %s by @%an" $PREV_TAG..HEAD)
           fi
           echo "notes<<EOF" >> $GITHUB_OUTPUT
           echo "$LOG" >> $GITHUB_OUTPUT

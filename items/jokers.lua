@@ -233,7 +233,7 @@ SMODS.Joker { -- Vanium's Curse
         text = {
             "If hand has a scoring {C:attention}6 and 7 {}",
             "{C:green,E:1}#3# in #4#{} to give {X:mult,C:white}x#2#{} Mult",
-            "else,gives {X:mult,C:white}x#1#{} Mult"
+            "otherwise gives {X:mult,C:white}x#1#{} Mult"
         }
     },
     calculate = function(self, card, context)

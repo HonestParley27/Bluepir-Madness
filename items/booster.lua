@@ -29,22 +29,16 @@ SMODS.Booster {
     cost = 6,
     weight = 0.75,
     create_card = function(self, card, i)
-        return create_card("BPMadness_Jokers",G.pack_cards,nil,nil,true,false,nil,nil)
+        return create_card("BPMadness_Jokers", G.pack_cards, nil, nil, true, false, nil, nil)
     end,
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.choose,
                 card.ability.extra
-        }}
-    end,
-    loc_txt = {
-        name = "Bluster Pack",
-        text = {
-            "Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers"
-        },
-        group_name = ""
-    }
+            }
+        }
+    end
 }
 
 SMODS.Booster {
@@ -56,22 +50,16 @@ SMODS.Booster {
     cost = 8,
     weight = 0.55,
     create_card = function(self, card, i)
-        return create_card("BPMadness_Jokers",G.pack_cards,nil,nil,true,false,nil,nil)
+        return create_card("BPMadness_Jokers", G.pack_cards, nil, nil, true, false, nil, nil)
     end,
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.choose,
                 card.ability.extra
-        }}
-    end,
-    loc_txt = {
-        name = "Jumbo Bluster Pack",
-        text = {
-            "Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers"
-        },
-        group_name = ""
-    }
+            }
+        }
+    end
 }
 
 
@@ -84,20 +72,14 @@ SMODS.Booster {
     cost = 10,
     weight = 0.55,
     create_card = function(self, card, i)
-        return create_card("BPMadness_Jokers",G.pack_cards,nil,nil,true,false,nil,nil)
+        return create_card("BPMadness_Jokers", G.pack_cards, nil, nil, true, false, nil, nil)
     end,
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.choose,
                 card.ability.extra
-        }}
-    end,
-    loc_txt = {
-        name = "Mega Bluster Pack",
-        text = {
-            "Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers"
-        },
-        group_name = ""
-    }
+            }
+        }
+    end
 }

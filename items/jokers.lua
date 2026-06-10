@@ -27,15 +27,6 @@ SMODS.Joker { -- Blue Pairs
             }
         }
     end,
-    loc_txt = {
-        name = "Blue Pairs",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult when ",
-            "{C:attention,E:2}Two Pair{} is played",
-            "Gains {X:mult,C:white} X#2# {} Mult",
-            "when {C:attention,E:2}Two Pair{} is played."
-        }
-    },
 
     calculate = function(self, card, context)
         if context.joker_main then                     -- if on joker context
@@ -74,13 +65,6 @@ SMODS.Joker {   -- Lucky Cloud
             }
         }
     end,
-    loc_txt = {
-        name = "Lucky Cloud",
-        text = {
-            "{C:green,E:1}#1# in #2#{} chance to level up poker hand,",
-            "when {C:attention,E:2}Two Pair{} is played."
-        }
-    },
 
     calculate = function(self, card, context)
         if context.before and context.scoring_name == "Two Pair" then                                   -- before scoring, if played a two pair
@@ -126,14 +110,7 @@ SMODS.Joker { -- Skip a Lime
             }
         }
     end,
-    loc_txt = {
-        name = "Skip A Lime",
-        text = {
-            "Gains {C:money}$#1#{} per blind skipped.",
-            "{X:mult,C:white} +#2# {} Mult",
-            "where Mult is equal to Sell Value of Joker"
-        }
-    },
+
     calculate = function(self, card, context)
         if context.skip_blind and not context.blueprint_card then                                       -- when skipping a blind but not blueprint
             card.ability.extra_value = card.ability.extra_value + card.ability.extra
@@ -173,13 +150,7 @@ SMODS.Joker { -- Short Circut
             }
         }
     end,
-    loc_txt = {
-        name = "Short Circut",
-        text = {
-            "Sets Gamespeed to x#1#",
-            "adds {C:white,X:mult} x#1# {} Mult"
-        }
-    },
+
     calculate = function(self, card, context)
         if G.SETTINGS.GAMESPEED ~= 4 and card.ability.extra.enabled and not context.blueprint_card then -- if game speed is not 4
             G.SETTINGS.GAMESPEED = 4                                                                    -- force to 4
@@ -228,14 +199,7 @@ SMODS.Joker { -- Vanium's Curse
             }
         }
     end,
-    loc_txt = {
-        name = "Vanium's Curse",
-        text = {
-            "If hand has a scoring {C:attention}6 and 7 {}",
-            "{C:green,E:1}#3# in #4#{} to give {X:mult,C:white}x#2#{} Mult",
-            "otherwise gives {X:mult,C:white}x#1#{} Mult"
-        }
-    },
+
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then -- scoring each card
             if context.other_card:get_id() == 6 then
@@ -282,13 +246,7 @@ SMODS.Joker { -- Ad Astra
             }
         }
     end,
-    loc_txt = {
-        name = "Ad Astra",
-        text = {
-            "{X:mult,C:white} x#1# {} Mult for each time ",
-            "{C:attention}poker hand{} has been played this run.",
-        }
-    },
+
 
     calculate = function(self, card, context)
         if context.joker_main then
@@ -325,14 +283,7 @@ SMODS.Joker { -- Herbcat ( 'w' )
             },
         }
     end,
-    loc_txt = {
-        name = "Herbcat",
-        text = {
-            "For every 2 and 7 still in deck",
-            "Adds {C:chips}+#1#{} chips",
-            "Currently {C:chips}+#2#{}"
-        }
-    },
+
     add_to_deck = function(self, card, from_debuff)
         local card2Count = BPMadness.ValdeckLookup(2)
         local card7Count = BPMadness.ValdeckLookup(2)
@@ -362,10 +313,7 @@ SMODS.Joker {   -- Australian Joker 🐨
     atlas = "TestJoker",
     pos = { x = 0, y = 0 },
     config = {},
-    loc_txt = {
-        name = "Australian Joker",
-        text = { "Swaps {C:mult}Mult{} and {C:chips}Chips{}", "on hand played" }
-    },
+
     calculate = function(self, card, context)
         if context.initial_scoring_step then
             return {
@@ -399,15 +347,7 @@ SMODS.Joker {   -- Blind Joker
             },
         }
     end,
-    loc_txt = {
-        name = "Blind Joker",
-        text = {
-            "Changes Blind Requirement by {X:blind,C:white}x#1#{}",
-            "Gains {X:blind,C:white}x#2#{} if played hand is {C:attention}#4#{}",
-            "Loses {X:blind,C:white}x#3#{} if played hand is not {C:attention}#4#{}",
-            "{C:inactive,S:0.8}(Poker Hand changes each round){}"
-        }
-    },
+
     add_to_deck = function(self, card, from_debuff)
         card.ability.extra.randomPokerHand = BPMadness.randPokerHand(card.ability.extra.randomPokerHand, "Blind Joker") -- select a random poker hand
     end,
@@ -465,15 +405,7 @@ SMODS.Joker {   -- Wood Chipper
             }
         }
     end,
-    loc_txt = {
-        name = "Wood Chipper",
-        text = {
-            "If {C:attention}First Hand{} of round",
-            "has only {C:attention}1{} card, Gains {C:attention}one-fourth{} of",
-            "its rank as {X:chips,C:white}xChips{} and destroy card.",
-            "Currently {X:chips,C:white}x#1#{} Chips"
-        }
-    },
+
     calculate = function(self, card, context)
         if context.destroy_card and context.cardarea == G.play then
             if G.GAME.current_round.hands_played <= 0 and #context.full_hand == 1 then -- if it's the first hand and only a card
@@ -517,14 +449,7 @@ SMODS.Joker {   -- Angels
             }
         }
     end,
-    loc_txt = {
-        name = "{C:blue}Angels{}",
-        text = {
-            "Gains {X:mult,C:white}x#2#{} Mult",
-            "Per member of {C:blue}Blue's{} Discord, and each follower {C:blue}Blue{} has on Twitch",
-            "Currently {X:mult,C:white}x#1#{} Mult",
-        }
-    },
+
     calculate = function(self, card, context)
         if context.joker_main then
             card.ability.extra.MultX = BPMadness.community_mult -- set community_mult as xmult
@@ -542,10 +467,7 @@ SMODS.Joker { -- Double Vision
     pos = { x = 0, y = 0 },
     cost = 10,
     rarity = 3, -- Rare
-    loc_txt = {
-        name = "Double Vision",
-        text = { "All {C:attention,E:2}Pairs{} are now {C:attention,E:2}Two Pairs{}" }
-    }, -- This is pretty much an empty shell since all logic resides in overrides.lua
+
     remove_from_deck = function(self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
@@ -579,14 +501,7 @@ SMODS.Joker { -- Snowball
             }
         }
     end,
-    loc_txt = {
-        name = "Snowball",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult{}.",
-            "Gains {X:mult,C:white} X#2# {} Mult{} per consecutive poker hand played.",
-            "Current hand: {C:attention}#3#{}"
-        }
-    },
+
 
     calculate = function(self, card, context)
         if context.before and not context.blueprint_card then
@@ -637,14 +552,6 @@ SMODS.Joker { -- Bluefrin
             }
         }
     end,
-    loc_txt = {
-        name = "Bluefrin",
-        text = {
-            "If played hand is a {C:attention}Two Pair{},",
-            "prevents Death {C:green,E:1}#1# more time(s).{}",
-            "{C:red,E:2}Self destructs.{}"
-        }
-    },
 
     calculate = function(self, card, context)                                             -- probably need to rewrite this into a proper event
         if context.end_of_round and context.game_over then                                -- if on end of round and on game over

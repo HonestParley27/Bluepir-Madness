@@ -20,12 +20,7 @@ SMODS.Consumable {
             }
         }
     end,
-    loc_txt = {
-        name = "Hydration",
-        text = { "Adds {C:blue}Cloud{} Seal to",
-            "{C:attention}#1#{} selected card ", -- #number# = returned val number
-        }
-    },
+
     use = function(self, card, area, copier)
         local conCard = G.hand.highlighted[1] -- get the selected card
         G.E_MANAGER:add_event(Event({
@@ -71,12 +66,7 @@ SMODS.Consumable {
             }
         }
     end,
-    loc_txt = {
-        name = "Spectrum",
-        text = { "Adds {C:purple}Witch{} Seal to",
-            "{C:attention}#1#{} selected card ", -- #number# = returned val number
-        }
-    },
+
     use = function(self, card, area, copier)
         local conCard = G.hand.highlighted[1] -- get the selected card
         G.E_MANAGER:add_event(Event({

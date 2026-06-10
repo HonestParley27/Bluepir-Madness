@@ -1,8 +1,8 @@
 SMODS.Atlas {
     key = "BluePirsDeck",
-  path = "BluePirsDeck.png",
+    path = "BluePirsDeck.png",
     px = 71,
-  py = 95
+    py = 95
 }
 
 SMODS.Back {
@@ -11,20 +11,13 @@ SMODS.Back {
     pos = { x = 0, y = 0 },
     loc_vars = function(self, info_queue, card)
         if info_queue then
-            info_queue[#info_queue+1] = G.P_CENTERS['j_bpm_BluePairs']
+            info_queue[#info_queue + 1] = G.P_CENTERS['j_bpm_BluePairs']
         end
         return { vars = {} }
     end,
-    loc_txt = {
-        name = "Blue Pairs",
-        text = {
-            "Start with a {C:attention,T:j_bpm_blue_pairs}Blue Pairs{} Joker,",
-            "And two {C:tarot,T:c_wheel_of_fortune} Wheel of Fortunes {}"
-        }
-    },
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
-            func = function ()
+            func = function()
                 if G.consumeables and G.jokers then
                     local card = SMODS.create_card({
                         set = "Tarot",

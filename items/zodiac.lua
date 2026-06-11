@@ -1,7 +1,7 @@
 SMODS.ConsumableType {
     key = "bpm_zodiac",
     default = "c_bpm_gemini",
-    shop_rate = 1,
+    shop_rate = 0,
     collection_rows = { 4, 4, 4 },
     primary_colour = G.C.YELLOW,
     secondary_colour = G.C.PURPLE

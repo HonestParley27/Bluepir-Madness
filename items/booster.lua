@@ -83,3 +83,24 @@ SMODS.Booster {
         }
     end
 }
+
+SMODS.Booster {
+    key = "zodiac_pack",
+    kind = "Zodiacs",
+    atlas = "normalBluester",
+    pos = { x = 0, y = 0 },
+    config = { extra = 3, choose = 1 },
+    cost = 6,
+    weight = 1,
+    create_card = function(self, card, i)
+        return create_card("bpm_zodiac", G.pack_cards, nil, nil, true, false, nil, nil)
+    end,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra
+            }
+        }
+    end
+}

@@ -17,11 +17,13 @@ return {
 			["k_bpm_angelic"] = "Angelic",
 			["k_booster_group_p_bpm_bluster_pack"] = "Bluster Pack",
 			["k_booster_group_p_bpm_jumbo_bluster_pack"] = "Jumbo Bluster Pack",
+			["k_bpm_zodiac"] = "Zodiac",
+			["b_bpm_zodiac_cards"] = "Zodiac Cards",
 		},
 		["labels"] = {
 			["bpm_cloud_seal"] = "Cloud Seal",
 			["k_bpm_angelic"] = "Angelic",
-			["bpm_witch_seal"] = "Witch Seal",
+			["bpm_witch_seal"] = "Witch Seal"
 		},
 	},
 	["descriptions"] = {
@@ -31,13 +33,6 @@ return {
 				["text"] = {
 					"Start with a {C:attention,T:j_bpm_blue_pairs}Blue Pairs{} Joker,",
 					"And two {C:tarot,T:c_wheel_of_fortune} Wheel of Fortunes {}",
-				},
-			},
-		},
-		["Blind"] = {
-			["bl_wheel"] = {
-				["text"] = {
-					"#1# in #2# cards get",
 				},
 			},
 		},
@@ -65,6 +60,13 @@ return {
 					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
 				},
 			},
+			["p_bpm_zodiac_pack"] = {
+				["group_name"] = "",
+				["name"] = "Zodiac Pack",
+				["text"] = {
+					"Choose {C:blue}#1#{} out of {C:blue}#2#{} Zodiac Cards",
+				},
+			},
 			["handsOfGod_ab1"] = {
 				["name"] = "{C:dark_edition,E:1}Exponential{}",
 				["text"] = {
@@ -86,7 +88,7 @@ return {
 				["text"] = {
 					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
 				},
-			},
+			}
 		},
 		["Joker"] = {
 			["j_bpm_hands_of_god"] = {
@@ -219,6 +221,30 @@ return {
 					"Adds {C:purple}Witch{} Seal to",
 					"{C:attention}#1#{} selected card ",
 				},
+			},
+		},
+		["bpm_zodiac"] = {
+			["c_bpm_aries"] = {
+				name = "Aries",
+				text = {
+					"Gain {C:blue}+2{} hands.",
+					"First hand per round",
+					"must be a {C:attention}High Card{}"
+				}
+			},
+			["c_bpm_taurus"] = {
+				name = "Taurus",
+				text = {
+					"Earn {C:money}$10{} at end of round.",
+					"{X:mult,C:white}X2{} blind size."
+				}
+			},
+			["c_bpm_gemini"] = {
+				name = "Gemini",
+				text = {
+					"{C:blue}+2{} {C:attention}consumable{} slots.",
+					"{C:red}-1{} {E:2}Joker{} slots."
+				}
 			},
 		},
 	},

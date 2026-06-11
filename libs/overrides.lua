@@ -1,6 +1,13 @@
+local gameStart = Game.start_run
+function Game:start_run(...) -- For future use!
+    local ret = gameStart(self, ...)
+    return ret
+end
+
 local upd = Game.update -- Save the original game functions
 function Game:update(dt)
     upd(self, dt)
+
     if not BPMadness.memberDelay then
         BPMadness.memberDelay = 0 -- Set up the delay
     end
@@ -15,10 +22,9 @@ function Game:update(dt)
     end
 end
 
-local evalHand = evaluate_poker_hand -- Original game function
+local evalHand = evaluate_poker_hand                       -- Original game function
 function evaluate_poker_hand(hand)
-    local ret = evalHand(hand)       -- LocalThunk why do you hate yourself this much
-
+    local ret = evalHand(hand)                             -- LocalThunk why do you hate yourself this much
     if SMODS.find_card('j_bpm_double_vision') and #SMODS.find_card('j_bpm_double_vision') > 0 then
         if #ret["Pair"] > 0 and #ret["Two Pair"] == 0 then -- If there's a least a pair but no two pairs...
             ret["Two Pair"] = ret["Pair"]                  -- then set the two pairs as the pairs

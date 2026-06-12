@@ -40,7 +40,7 @@ SMODS.Seal {
     calculate    = function(self, card, context)
         if context.repetition and context.scoring_name == "Two Pair" then -- if the scoring hand is a two pair
             return {
-                repetitions = self.ability.extra.repeatTimes,             -- repeat #repeatTimes
+                repetitions = self.config.extra.repeatTimes,              -- repeat #repeatTimes
                 card = card                                               -- the card played
             }
         end
@@ -79,8 +79,8 @@ SMODS.Seal {
                                 editions[#editions + 1] = edition.key
                             end
                         end
-                        random_joker = pseudorandom_element(editionless_jokers,"Witch Seal")
-                        random_edition = pseudorandom_element(editions,"Witch Seal")
+                        random_joker = pseudorandom_element(editionless_jokers, "Witch Seal")
+                        random_edition = pseudorandom_element(editions, "Witch Seal")
                     end
                     return true
                 end

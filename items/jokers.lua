@@ -1,57 +1,16 @@
 SMODS.Atlas { -- Sprite for all test jokers
-    key = "TestJoker",
-    path = "test_joker.png",
+    key = "BlueJoker",
+    path = "BluePirsJokers.png",
     px = 71,
     py = 95
 
 }
 
-SMODS.Joker { -- Blue Pairs
-    key = "blue_pairs",
-    config = {
-        extra = {
-            xMult = 1,       -- Original mult
-            xMultgain = 0.25 -- Gain per condition
-        }
-    },
-    rarity = 2, -- uncommon
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
-    cost = 5, -- card cost in shop
-    loc_vars = function(self, info_queue, card)
-        return {
-            vars = {
-                card.ability.extra.xMult,
-                card.ability.extra.xMultgain
-
-            }
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.joker_main then                     -- if on joker context
-            if context.scoring_name == 'Two Pair' then -- and played hand is a two pair
-                return {
-                    xmult = card.ability.extra.xMult   -- adds mult
-                }
-            end
-        end
-
-        if context.before and context.scoring_name == "Two Pair" and not context.blueprint_card then -- if two pair scores but not a blueprint
-            card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultgain       -- add more mult
-            return {
-                message = "Upgraded!"
-            }
-        end
-    end
-}
-
-
 SMODS.Joker {   -- Lucky Cloud
     key = "lucky_cloud",
     rarity = 2, -- uncommon
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 1, y = 0 },
     cost = 6,        -- cost in shop
     config = { extra = {
         lvChance = 3 -- num/3 chance
@@ -83,6 +42,46 @@ SMODS.Joker {   -- Lucky Cloud
     end
 }
 
+SMODS.Joker { -- Blue Pairs
+    key = "blue_pairs",
+    config = {
+        extra = {
+            xMult = 1,       -- Original mult
+            xMultgain = 0.25 -- Gain per condition
+        }
+    },
+    rarity = 2, -- uncommon
+    atlas = "BlueJoker",
+    pos = { x = 2, y = 0 },
+    cost = 5, -- card cost in shop
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.xMult,
+                card.ability.extra.xMultgain
+
+            }
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.joker_main then                     -- if on joker context
+            if context.scoring_name == 'Two Pair' then -- and played hand is a two pair
+                return {
+                    xmult = card.ability.extra.xMult   -- adds mult
+                }
+            end
+        end
+
+        if context.before and context.scoring_name == "Two Pair" and not context.blueprint_card then -- if two pair scores but not a blueprint
+            card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultgain       -- add more mult
+            return {
+                message = "Upgraded!"
+            }
+        end
+    end
+}
+
 
 SMODS.Joker { -- Skip a Lime
     key = "skip_a_lime",
@@ -93,8 +92,8 @@ SMODS.Joker { -- Skip a Lime
         plusMult = 1         -- additional mult
     } },
     rarity = 1,              -- common
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 3, y = 0 },
     loc_vars = function(self, info_queue, card)
         local mu = 0
         if card.cost / 2 < 1 then
@@ -140,8 +139,8 @@ SMODS.Joker { -- Short Circut
         enabled = true
     } },
     rarity = 3, -- Rare
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 4, y = 0 },
     cost = 10,
     loc_vars = function(self, info_queue, card)
         return {
@@ -184,8 +183,8 @@ SMODS.Joker { -- Vanium's Curse
             scored7 = false  -- hand scored a 7
         }
     },
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 0, y = 1 },
     rarity = 1, -- Common
     cost = 3,
     loc_vars = function(self, info_queue, card)
@@ -232,10 +231,10 @@ SMODS.Joker { -- Vanium's Curse
 
 SMODS.Joker { -- Ad Astra
     key = "ad_astra",
-    atlas = "TestJoker",
+    atlas = "BlueJoker",
     rarity = 2, -- Uncommon
     cost = 5,
-    pos = { x = 0, y = 0 },
+    pos = { x = 1, y = 1 },
     config = { extra = {
         MultX = 0.1 -- x0.1 mult
     } },
@@ -263,8 +262,8 @@ SMODS.Joker { -- Ad Astra
 
 SMODS.Joker { -- Herbcat ( 'w' )
     key = "herb_cat",
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 2, y = 1 },
     cost = 3,
     rarity = 1,           -- Common
     config = { extra = {
@@ -310,8 +309,8 @@ SMODS.Joker {   -- Australian Joker 🐨
     key = "australian_joker",
     rarity = 3, -- Rare
     cost = 7,
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 3, y = 1 },
     config = {},
 
     calculate = function(self, card, context)
@@ -329,8 +328,8 @@ SMODS.Joker {   -- Blind Joker
     key = "blind_joker",
     rarity = 3, -- Rare
     cost = 10,
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 4, y = 1 },
     config = { extra = {
         blindMult = 1,                -- original blind mult
         blindgain = 0.1,              -- gain blind
@@ -393,8 +392,8 @@ SMODS.Joker {   -- Wood Chipper
     key = "wood_chipper",
     rarity = 3, -- Rare
     cost = 9,
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 0, y = 2 },
     config = { extra = {
         chipX = 1 -- times chip my beloved
     } },
@@ -431,8 +430,8 @@ SMODS.Joker {   -- Angels
     key = "angels",
     rarity = 4, -- Legendary
     cost = 20,
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 2, y = 2 },
     config = {
         extra = {
             MultX = BPMadness.community_mult, -- from http.lua
@@ -463,8 +462,8 @@ SMODS.Joker {   -- Angels
 
 SMODS.Joker { -- Double Vision
     key = "double_vision",
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 1, y = 2 },
     cost = 10,
     rarity = 3, -- Rare
 
@@ -481,8 +480,8 @@ SMODS.Joker { -- Double Vision
 
 SMODS.Joker { -- Snowball
     key = "snowball",
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 3, y = 2 },
     cost = 10,
     rarity = 3, -- Rare
     config = {
@@ -534,8 +533,8 @@ SMODS.Joker { -- Snowball
 
 SMODS.Joker { -- Bluefrin
     key = "bluefrin",
-    atlas = "TestJoker",
-    pos = { x = 0, y = 0 },
+    atlas = "BlueJoker",
+    pos = { x = 4, y = 2 },
     cost = 20,
     rarity = 4,               -- Legendary
     blueprint_compat = false, -- Blueprint can't copy Bluefrin

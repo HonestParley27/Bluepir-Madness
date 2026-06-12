@@ -1,6 +1,7 @@
 local gameStart = Game.start_run
-function Game:start_run(...) -- For future use!
+function Game:start_run(...)
     local ret = gameStart(self, ...)
+    G.GAME.zodiac = G.GAME.zodiac or {}
     return ret
 end
 
@@ -37,4 +38,14 @@ local cardEval = eval_card -- Original game function
 function eval_card(card, context)
     local ret, post = cardEval(card, context)
     return ret, post
+end
+
+local createBlindUI = create_UIBox_blind_tag
+function create_UIBox_blind_tag(blind_choice, run_info)
+    if G.GAME.zodiac.cancer then
+        return nil
+    end
+
+    local blindUI = createBlindUI(blind_choice, run_info)
+    return blindUI
 end

@@ -13,17 +13,20 @@ return {
 			["c_bpm_orange_pairless"] = "Orange Pairless",
 		},
 		["dictionary"] = {
-			["k_booster_group_p_bpm_mega_bluster_pack"] = "Mega Blueter Pack",
 			["k_bpm_angelic"] = "Angelic",
 			["k_booster_group_p_bpm_bluster_pack"] = "Bluster Pack",
+			["k_booster_group_p_bpm_mega_bluster_pack"] = "Mega Bluster Pack",
 			["k_booster_group_p_bpm_jumbo_bluster_pack"] = "Jumbo Bluster Pack",
 			["k_bpm_zodiac"] = "Zodiac",
 			["b_bpm_zodiac_cards"] = "Zodiac Cards",
+			["k_booster_group_p_bpm_zodiac_pack"] = "Zodiac Pack",
+			["k_booster_group_p_bpm_mega_zodiac_pack"] = "Mega Zodiac Pack",
+			["k_booster_group_p_bpm_jumbo_zodiac_pack"] = "Jumbo Zodiac Pack",
 		},
 		["labels"] = {
+			["bpm_witch_seal"] = "Witch Seal",
 			["bpm_cloud_seal"] = "Cloud Seal",
 			["k_bpm_angelic"] = "Angelic",
-			["bpm_witch_seal"] = "Witch Seal"
 		},
 	},
 	["descriptions"] = {
@@ -54,15 +57,43 @@ return {
 				},
 			},
 			["p_bpm_bluster_pack"] = {
-				["group_name"] = "",
+				["group_name"] = "Blusters",
 				["name"] = "Bluster Pack",
 				["text"] = {
 					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
 				},
 			},
+			["p_bpm_mega_bluster_pack"] = {
+				["group_name"] = "Blusters",
+				["name"] = "Mega Bluster Pack",
+				["text"] = {
+					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
+				},
+			},
+			["p_bpm_jumbo_bluster_pack"] = {
+				["group_name"] = "Blusters",
+				["name"] = "Jumbo Bluster Pack",
+				["text"] = {
+					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
+				},
+			},
 			["p_bpm_zodiac_pack"] = {
-				["group_name"] = "",
+				["group_name"] = "Zodiacs",
 				["name"] = "Zodiac Pack",
+				["text"] = {
+					"Choose {C:blue}#1#{} out of {C:blue}#2#{} Zodiac Cards",
+				},
+			},
+			["p_bpm_mega_zodiac_pack"] = {
+				["group_name"] = "Zodiacs",
+				["name"] = "Mega Zodiac Pack",
+				["text"] = {
+					"Choose {C:blue}#1#{} out of {C:blue}#2#{} Zodiac Cards",
+				},
+			},
+			["p_bpm_jumbo_zodiac_pack"] = {
+				["group_name"] = "Zodiacs",
+				["name"] = "Jumbo Zodiac Pack",
 				["text"] = {
 					"Choose {C:blue}#1#{} out of {C:blue}#2#{} Zodiac Cards",
 				},
@@ -73,20 +104,6 @@ return {
 					"{X:dark_edition,C:white}^e{} Mult",
 					"Where {C:attention}e{} is the level of",
 					"{C:attention}#1#{}",
-				},
-			},
-			["p_bpm_mega_bluster_pack"] = {
-				["group_name"] = "",
-				["name"] = "Mega Bluster Pack",
-				["text"] = {
-					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
-				},
-			},
-			["p_bpm_jumbo_bluster_pack"] = {
-				["group_name"] = "",
-				["name"] = "Jumbo Bluster Pack",
-				["text"] = {
-					"Choose {C:blue}#1#{} out of {C:blue}#2#{} BluePir's Madness Jokers",
 				},
 			}
 		},
@@ -179,7 +196,7 @@ return {
 			["j_bpm_blue_pairs"] = {
 				["name"] = "Blue Pairs",
 				["text"] = {
-					"{X:mult,C:white} X#1# {} Mult when ",
+					"{X:mult,C:white} X#1# {} Mult when",
 					"{C:attention,E:2}Two Pair{} is played",
 					"Gains {X:mult,C:white} X#2# {} Mult",
 					"when {C:attention,E:2}Two Pair{} is played.",
@@ -244,6 +261,70 @@ return {
 				text = {
 					"{C:blue}+2{} {C:attention}consumable{} slots.",
 					"{C:red}-1{} {E:2}Joker{} slots."
+				}
+			},
+			["c_bpm_cancer"] = {
+				name = "Cancer",
+				text = {
+					"Creates a {C:G.C.DARK_EDITION,E:1}negative{} copy of {C:attention}Mr. Bones{}.",
+					"You can {C:red}no longer skip {C:red,E:2}blinds.{}"
+				}
+			},
+			["c_bpm_leo"] = {
+				name = "Leo",
+				text = {
+					"All scored {C:attention}face cards{} give {X:mult,C:white}X3{} Mult.",
+					"All {C:attention}numbered cards{} are debuffed."
+				}
+			},
+			["c_bpm_virgo"] = {
+				name = "Virgo",
+				text = {
+					"{C:mult}+1{} Mult for every remaining card in {C:blue}deck{}.",
+					"Every {C:attention}discarded card{} costs {C:money}$1{}."
+				}
+			},
+			["c_bpm_libra"] = {
+				name = "Libra",
+				text = {
+					"{C:chips}Chips{} and {C:mult}Mult{} get balanced at end of hand.",
+					"{C:red}-1{} {C:blue}hand{} and {C:red}discard{}."
+				}
+			},
+			["c_bpm_scorpius"] = {
+				name = "Scorpius",
+				text = {
+					"{C:enhancement}Level up{} most played poker hand {C:blue}5 times{}.",
+					"Only {C:attention}the enhanced card{} will score."
+				}
+			},
+			["c_bpm_sagittarius"] = {
+				name = "Sagittarius",
+				text = {
+					"All {C:green,E:1}probabilities{} are {G:edition,E:1}guaranteed{}.",
+					"{C:red}-2{} hand size."
+				}
+			},
+			["c_bpm_capricornus"] = {
+				name = "Capricornus",
+				text = {
+					"Gain {X:mult,C:white}XMult{} equal to the",
+					"sum of {C:attention}sell value{} of all {E:2}Jokers{}.",
+					"{C:attention}Destroy{} all {E:2}Jokers{}."
+				}
+			},
+			["c_bpm_aquarius"] = {
+				name = "Aquarius",
+				text = {
+					"All {C:attention}hands{} will score as your {C:attention,E:1}most played{} poker hand.",
+					"All cards and packs in {C:attention}Shop{} are 25% {C:red}more expensive{}."
+				}
+			},
+			["c_bpm_pisces"] = {
+				name = "Pisces",
+				text = {
+					"Sets {C:attention}Ante{} to 0.",
+					"Loses {C:money}half your ${} at end of round."
 				}
 			},
 		},

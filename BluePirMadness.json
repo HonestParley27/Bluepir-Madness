@@ -3,12 +3,12 @@
     "name": "Bluepir's Madness",
     "display_name": "Bluepir's Madness",
     "author": [
-        "HonestParley27 (Developer and Artist)",
-        "JustNotSebas (Developer)",
-        "Bluepirs (Artist and Angel)"
+        "HonestParley27",
+        "JustNotSebas",
+        "Bluepirs"
     ],
     "description": "A Balatro mod for Bluepirs and her angelic community~",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "main_file": "main.lua",
     "prefix": "bpm",
     "priority": 0,

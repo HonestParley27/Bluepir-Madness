@@ -31,6 +31,16 @@ function evaluate_poker_hand(hand)
             ret["Two Pair"] = ret["Pair"]                  -- then set the two pairs as the pairs
         end
     end
+    if G.GAME.zodiac.aquarius then
+        if #ret[G.GAME.zodiac.aquarius_hand] == 0 then
+            table.insert(ret[G.GAME.zodiac.aquarius_hand], hand[1])
+        end
+    end
+    if G.GAME.zodiac.scorpius then
+        if #ret[G.GAME.zodiac.scorpius_hand] == 0 then
+            table.insert(ret[G.GAME.zodiac.scorpius_hand], hand[1])
+        end
+    end
     return ret -- and return the madness back
 end
 

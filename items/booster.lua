@@ -1,6 +1,6 @@
 SMODS.Atlas {
     key = "BlueBooster",
-    path = "BPMBoosters.png",
+    path = "BluePirsBoosters.png",
     px = 71,
     py = 95
 

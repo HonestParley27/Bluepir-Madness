@@ -26,6 +26,7 @@ return {
 		["labels"] = {
 			["bpm_witch_seal"] = "Witch Seal",
 			["bpm_cloud_seal"] = "Cloud Seal",
+			["bpm_nitro_seal"] = "Nitro Seal",
 			["k_bpm_angelic"] = "Angelic",
 		},
 	},
@@ -34,8 +35,9 @@ return {
 			["b_bpm_Blue Pairs"] = {
 				["name"] = "Blue Pairs",
 				["text"] = {
-					"Start with a {C:attention,T:j_bpm_blue_pairs}Blue Pairs{} Joker,",
-					"And two {C:tarot,T:c_wheel_of_fortune} Wheel of Fortunes {}",
+					"Start with {C:chips,T:j_bpm_blue_pairs}Blue Pairs{}",
+					"and {C:attention}2{} copies of",
+					"{C:tarot,T:c_wheel_of_fortune}Wheel of Fortune.{}"
 				},
 			},
 		},
@@ -44,8 +46,8 @@ return {
 				["name"] = "Cloud Seal",
 				["label"] = "Cloud Seal",
 				["text"] = {
-					"If Played hand is a {C:attention}Two Pair{}",
-					"Retrigger this card #1# times",
+					"If played hand is a {C:attention}Two Pair{},",
+					"retrigger this card {C:attention}#1# times{}",
 				},
 			},
 			["bpm_witch_seal"] = {
@@ -54,6 +56,15 @@ return {
 				["text"] = {
 					"If held in hand by end of round,",
 					"apply a {C:attention}random enhancement{} to a random {E:1}Joker{}.",
+				},
+			},
+			["bpm_nitro_seal"] = {
+				["name"] = "Nitro Seal",
+				["label"] = "Nitro Seal",
+				["text"] = {
+					"If card is played and scores,",
+					"gain {C:money}${} equal to {C:attention}half the rank{}.",
+					"of the scored card."
 				},
 			},
 			["p_bpm_bluster_pack"] = {
@@ -165,7 +176,7 @@ return {
 				},
 			},
 			["j_bpm_angels"] = {
-				["name"] = "{C:blue}Angels{}",
+				["name"] = "{C:blue,E:1}Angels{}",
 				["text"] = {
 					"Gains {X:mult,C:white}x#2#{} Mult",
 					"Per member of {C:blue}Blue's{} Discord, and each follower {C:blue}Blue{} has on Twitch",
@@ -180,7 +191,7 @@ return {
 				},
 			},
 			["j_bpm_bluefrin"] = {
-				["name"] = "Bluefrin",
+				["name"] = "{C:edition,E:1}Bluefrin{}",
 				["text"] = {
 					"If played hand is a {C:attention}Two Pair{},",
 					"prevents Death {C:green,E:1}#1# more time(s).{}",
@@ -229,14 +240,24 @@ return {
 				["name"] = "Hydration",
 				["text"] = {
 					"Adds {C:blue}Cloud{} Seal to",
-					"{C:attention}#1#{} selected card ",
+					"{C:attention}#1#{} selected card.",
+					"{C:inactive,s:0.8}Art by Stellar1407.{}"
 				},
 			},
 			["c_bpm_spectrum"] = {
 				["name"] = "Spectrum",
 				["text"] = {
 					"Adds {C:purple}Witch{} Seal to",
-					"{C:attention}#1#{} selected card ",
+					"{C:attention}#1#{} selected card.",
+					"{C:inactive,s:0.8}Art by Stellar1407.{}"
+				},
+			},
+			["c_bpm_payroll"] = {
+				["name"] = "Payroll",
+				["text"] = {
+					"Adds {C:DARK_EDITION}Nitro{} Seal to",
+					"{C:attention}#1#{} selected card.",
+					"{C:inactive,s:0.8}Art by Stellar1407.{}"
 				},
 			},
 		},

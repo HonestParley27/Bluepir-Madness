@@ -1,21 +1,34 @@
 SMODS.Atlas { -- sprite for cloud seal
-    key = "test_seal",
-    path = "TestSeal.png",
+    key = "Blue_Seal",
+    path = "BluePirsSeals.png",
     px = 71,
     py = 95
 }
 
-SMODS.Atlas { -- sprite for witch seal
-    key = "test_seal2",
-    path = "TestSeal2.png",
-    px = 71,
-    py = 95
+SMODS.DrawStep {
+    key = 'seal',
+    order = 30,
+    func = function(self, layer)
+        local seal = G.P_SEALS[self.seal] or {}
+        if self.ability.delay_seal then return end
+        if type(seal.draw) == 'function' then
+            seal:draw(self, layer)
+        elseif self.seal then
+            G.shared_seals[self.seal].role.draw_major = self
+            G.shared_seals[self.seal]:draw_shader('dissolve', nil, nil, nil, self.children.center)
+            if self.seal == 'Gold' or self.seal == 'bpm_nitro' then
+                G.shared_seals[self.seal]:draw_shader('voucher', nil,
+                    self.ARGS.send_to_shader, nil, self.children.center)
+            end
+        end
+    end,
+    conditions = { vortex = false, facing = 'front' },
 }
 
 SMODS.Seal {
     key          = "cloud",
     badge_colour = G.C.CHIPS,
-    atlas        = "test_seal",
+    atlas        = "Blue_Seal",
     pos          = { x = 0, y = 0 },
 
     config       = { extra = {
@@ -29,14 +42,6 @@ SMODS.Seal {
             }
         }
     end,
-    loc_txt      = {
-        label = "Cloud Seal",
-        name = "Cloud Seal",
-        text = {
-            "If Played hand is a {C:attention}Two Pair{}",
-            "Retrigger this card #1# times"
-        }
-    },
     calculate    = function(self, card, context)
         if context.repetition and context.scoring_name == "Two Pair" then -- if the scoring hand is a two pair
             return {
@@ -50,18 +55,10 @@ SMODS.Seal {
 SMODS.Seal {
     key          = "witch",
     badge_colour = G.C.PURPLE,
-    atlas        = "test_seal2",
-    pos          = { x = 0, y = 0 },
+    atlas        = "Blue_Seal",
+    pos          = { x = 1, y = 0 },
     config       = {
         extra = {
-        }
-    },
-    loc_txt      = {
-        label = "Witch Seal",
-        name = "Witch Seal",
-        text = {
-            "If held in hand by end of round,",
-            "apply a {C:attention}random enhancement{} to a random {E:1}Joker{}."
         }
     },
     calculate    = function(self, card, context)
@@ -107,6 +104,24 @@ SMODS.Seal {
                     return true
                 end
             }))
+        end
+    end
+}
+
+SMODS.Seal {
+    key          = "nitro",
+    badge_colour = G.C.DARK_EDITION,
+    atlas        = "Blue_Seal",
+    pos          = { x = 2, y = 0 },
+    config       = {
+        extra = {
+        }
+    },
+    calculate    = function(self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            return {
+                dollars = math.floor(card:get_id() / 2)
+            }
         end
     end
 }
